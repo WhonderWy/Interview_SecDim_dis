@@ -1,6 +1,6 @@
 from pprint import pprint
 from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseBadRequest
 from rest_framework import views
 # from rest_framework.decorators import api_view
 # from .discount_logic import DiscountSerialiser
@@ -29,12 +29,15 @@ class DiscountView(views.APIView):
         return HttpResponse("Test")
 
     def post(self, request):
-        original: str = request.data["original"]
-        percentage: str = request.data["percentage"]
-        orig: decimal.Decimal = decimal.Decimal(original)
-        percent: decimal.Decimal = decimal.Decimal(percentage)
-        result: decimal.Decimal | int = dis(orig, percent)
-        return JsonResponse({"result": str(result)})
+        try:
+            original: str = request.data["original"]
+            percentage: str = request.data["percentage"]
+            orig: decimal.Decimal = decimal.Decimal(original)
+            percent: decimal.Decimal = decimal.Decimal(percentage)
+            result: decimal.Decimal | int = dis(orig, percent)
+            return JsonResponse({"result": str(result)})
+        except:
+            return HttpResponseBadRequest("Did something wrong.")
 
 # @api_view(["POST"])
 # def discount(request):
