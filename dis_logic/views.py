@@ -1,0 +1,52 @@
+from pprint import pprint
+from django.shortcuts import render
+from django.http import HttpResponse, JsonResponse
+from rest_framework import views
+# from rest_framework.decorators import api_view
+# from .discount_logic import DiscountSerialiser
+# from .models import DiscountOff
+import decimal
+from .discount_logic import dis
+
+# Create your views here.
+# viewsets.ModelViewSet
+# class DiscountView(viewsets.ModelViewSet):
+#     serializer_class = DiscountSerialiser
+#     queryset = DiscountOff.objects.all()
+
+#     def update(self, request):
+#         print("Beginning of request")
+#         pprint(request)
+#         print("End of request")
+#         return JsonResponse({"test": "data"})
+
+class DiscountView(views.APIView):
+    @classmethod
+    def get_extra_actions(cls):
+        return []
+    
+    def get(self, request):
+        return HttpResponse("Test")
+
+    def post(self, request):
+        original: str = request.data["original"]
+        percentage: str = request.data["percentage"]
+        orig: decimal.Decimal = decimal.Decimal(original)
+        percent: decimal.Decimal = decimal.Decimal(percentage)
+        result: decimal.Decimal | int = dis(orig, percent)
+        return JsonResponse({"result": str(result)})
+
+# @api_view(["POST"])
+# def discount(request):
+#     print("Beginning of request")
+#     pprint(request)
+#     print("End of request")
+#     content = {"message": "Welcome to the BookStore!"}
+#     return JsonResponse(content)
+
+# Create your views here.
+def index(request):
+    print("test stuff begin")
+    pprint(request)
+    print("test stuff end")
+    return HttpResponse("Hello, world. You're looking at the main view.")

@@ -1,0 +1,10 @@
+from django.db import models
+
+# Create your models here.
+class DiscountOff(models.Model):
+    original_price = models.PositiveBigIntegerField()
+    discount_percentage_as_integer = models.PositiveIntegerField()
+    resultant_price = models.DecimalField(max_digits=15, decimal_places=2)
+
+    def __str__(self) -> str:
+        return super().__str__()
