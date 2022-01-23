@@ -10,5 +10,5 @@ from dis_logic import views
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('api', views.DiscountView.as_view()),
+    path('api/', views.DiscountView.as_view()),
 ]

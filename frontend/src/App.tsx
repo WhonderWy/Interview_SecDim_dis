@@ -42,6 +42,9 @@ function App() {
   };
 
   const autoUpdate = async () => {
+    if (+original < 0 || +percentage < 0) {
+      console.log("Note that negative numbers shouldn't be a thing. But the spec doesn't mention a thing about it.");
+    }
     if (autoRequest) {
       await talkWithBackend();
     } else {

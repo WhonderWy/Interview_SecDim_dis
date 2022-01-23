@@ -46,7 +46,4 @@ class DiscountView(views.APIView):
 
 # Create your views here.
 def index(request):
-    print("test stuff begin")
-    pprint(request)
-    print("test stuff end")
-    return HttpResponse("Hello, world. You're looking at the main view.")
+    return HttpResponse("Hello, world. You shouldn't be looking here. If you are, I did not build this site.")
