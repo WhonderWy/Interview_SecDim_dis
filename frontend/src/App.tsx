@@ -26,6 +26,9 @@ function App() {
     if (original === "" || percentage === "") {
       return Promise.resolve();
     }
+    if (+original < 0 || +percentage < 0 || +percentage > 100) {
+      Promise.reject(new Error("Invalid numbers."));
+    }
     let response;
     try {
       response = await axios.post("/api/", { original, percentage });
@@ -114,6 +117,9 @@ function App() {
                 onChange={async (e: {
                   target: { value: React.SetStateAction<string> };
                 }) => {
+                  if (+e.target.value < 0) {
+                    return;
+                  }
                   setOriginal(e.target.value);
                 }}
               />
@@ -126,6 +132,10 @@ function App() {
                 onChange={async (e: {
                   target: { value: React.SetStateAction<string> };
                 }) => {
+                  if (+e.target.value < 0 || +percentage > 100) {
+                    setPercentage("100");
+                    return;
+                  }
                   setPercentage(e.target.value);
                 }}
               />

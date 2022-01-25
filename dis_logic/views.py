@@ -33,7 +33,11 @@ class DiscountView(views.APIView):
             original: str = request.data["original"]
             percentage: str = request.data["percentage"]
             orig: decimal.Decimal = decimal.Decimal(original)
+            if orig < 0:
+                raise Exception
             percent: decimal.Decimal = decimal.Decimal(percentage)
+            if percent > 100 or percent < 0:
+                raise Exception
             result: decimal.Decimal | int = dis(orig, percent)
             return JsonResponse({"result": str(result)})
         except:
